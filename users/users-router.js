@@ -24,6 +24,22 @@ router.get('/', async (req, res) => {
     // });
 })
 
+router.get('/:id/posts', async (req,res) => {
+    try {
+        const userPosts = await Users.getUserPosts(req.params.id);
+        if (userPosts) {
+            res.status(200).json(userPosts)
+        } else {
+            res.status(404).json({message: `User's post not found`})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Error getting posts'
+        })
+    }
+})
+
 router.get('/:id', async (req, res) => {
     try {
         const user = await Users.getById(req.params.id);
@@ -51,5 +67,39 @@ router.post('/', async (req, res) => {
         })
     }
 })
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const user = await Users.remove(req.params.id);
+        if (user) {
+            res.status(200).json({message: 'User has been deleted'})
+        } else {
+            res.status(404).json({error: 'User cannot be found'})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'Error removing user'
+        })
+    }
+})
+
+router.put('/:id', async (req, res) => {
+    const changes = req.body;
+    try {
+      const userUpdate = await Users.update(req.params.id, changes);
+      if (userUpdate) {
+        res.status(200).json(userUpdate);
+      } else {
+        res.status(404).json({ message: 'The User could not be found' });
+      }
+    } catch (error) {
+      // log error to database
+      console.log(error);
+      res.status(500).json({
+        message: 'Error updating the user',
+      });
+    }
+  });
 
 module.exports = router;

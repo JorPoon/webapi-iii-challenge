@@ -11,6 +11,7 @@ server.use(express.json());
 server.use(helmet());
 
 server.use('/api/users', usersRouter);
-//server.use('/api/users/posts', postsRouter);
+//server.use('/api/users/:id/posts', postsRouter);
+server.use('/api/posts', postsRouter)
 
 module.exports = server;
