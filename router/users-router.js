@@ -1,8 +1,18 @@
 const express = require('express');
+// const upperCase = require('upperCase')
 
 const Users = require('../data/helpers/userDb');
 
 const router = express.Router();
+
+function cap(req, res, next) {
+    const letters = req.body
+    if(letters === letters.toUpperCase()) {
+        next();
+    } else {
+        res.status(403).send('Your name needs to be all capitilize')
+    }
+}
 
 // this only runs if the url has /api/users in it
 router.get('/', async (req, res) => {
@@ -57,9 +67,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', cap, async (req, res) => {
     try {
-        const user = await Users.insert(req.body);
+        const user =  await Users.insert(req.body);
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({
