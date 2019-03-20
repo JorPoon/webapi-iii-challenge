@@ -6,12 +6,12 @@ const Users = require('../data/helpers/userDb');
 const router = express.Router();
 
 function cap(req, res, next) {
-    const letters = req.body
-    if(letters === letters.toUpperCase()) {
+    if (!req.body.name) {
+        res.status(400).json({ message: "Forgot about the name" });
+      } else {
+        req.body.name = req.body.name.toUpperCase();
         next();
-    } else {
-        res.status(403).send('Your name needs to be all capitilize')
-    }
+      }
 }
 
 // this only runs if the url has /api/users in it
