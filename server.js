@@ -26,11 +26,11 @@ server.use('/api/users', usersRouter);
 //server.use('/api/users/:id/posts', postsRouter);
 server.use('/api/posts', postsRouter)
 
-if (process.env.NODE_ENV === 'production') {
-	server.use(express.static('client/build'));
-}
-server.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+// if (process.env.NODE_ENV === 'production') {
+// 	server.use(express.static('client/build'));
+// }
+// server.get('*', (request, response) => {
+// 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// });
 
 module.exports = server;
