@@ -20,7 +20,7 @@ server.use(express.json());
 server.use(helmet());
 //server.use(cap);
 
-server.use('/api/users', express.static(usersRouter));
+server.use('/api/users', express.static('./router/users-router.js'));
 //server.use('/api/users/:id/posts', postsRouter);
 server.use('/api/posts', postsRouter)
 
